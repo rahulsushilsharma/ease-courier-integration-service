@@ -1,0 +1,69 @@
+{
+  "info": {
+    "name": "Courier Integration Service",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [{ "key": "base_url", "value": "http://localhost:3000/api/v1" }],
+  "item": [
+    {
+      "name": "Create Order (Mock)",
+      "request": {
+        "method": "POST",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "url": "{{base_url}}/orders",
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"order_id\": \"ORD-1001\",\n  \"courier_partner\": \"mockcourier\",\n  \"pickup_address\": {\"name\":\"Warehouse A\",\"phone\":\"9999999999\",\"line1\":\"Plot 1\",\"city\":\"Bengaluru\",\"state\":\"KA\",\"pincode\":\"560001\",\"country\":\"IN\"},\n  \"drop_address\": {\"name\":\"Jane Doe\",\"phone\":\"8888888888\",\"line1\":\"Flat 2B\",\"city\":\"Mumbai\",\"state\":\"MH\",\"pincode\":\"400001\",\"country\":\"IN\"},\n  \"package\": {\"weight_kg\": 1.2},\n  \"payment_mode\": \"PREPAID\"\n}"
+        }
+      }
+    },
+    {
+      "name": "Create Order (UrbaneBolt)",
+      "request": {
+        "method": "POST",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "url": "{{base_url}}/orders",
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"order_id\": \"ORD-1002\",\n  \"courier_partner\": \"urbanebolt\",\n  \"pickup_address\": {\"name\":\"Warehouse A\",\"phone\":\"9999999999\",\"line1\":\"Plot 1\",\"city\":\"Bengaluru\",\"state\":\"KA\",\"pincode\":\"560001\",\"country\":\"IN\"},\n  \"drop_address\": {\"name\":\"John Doe\",\"phone\":\"7777777777\",\"line1\":\"House 9\",\"city\":\"Delhi\",\"state\":\"DL\",\"pincode\":\"110001\",\"country\":\"IN\"},\n  \"package\": {\"weight_kg\": 2.5}\n}"
+        }
+      }
+    },
+    {
+      "name": "Track Order",
+      "request": { "method": "GET", "url": "{{base_url}}/orders/ORD-1001/track" }
+    },
+    {
+      "name": "Cancel Order",
+      "request": { "method": "POST", "url": "{{base_url}}/orders/ORD-1001/cancel" }
+    },
+    {
+      "name": "Unknown Courier (400)",
+      "request": {
+        "method": "POST",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "url": "{{base_url}}/orders",
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"order_id\": \"ORD-BAD\",\n  \"courier_partner\": \"doesnotexist\",\n  \"pickup_address\": {\"name\":\"A\",\"phone\":\"9999999999\",\"line1\":\"L1\",\"city\":\"C\",\"state\":\"S\",\"pincode\":\"123456\",\"country\":\"IN\"},\n  \"drop_address\": {\"name\":\"B\",\"phone\":\"8888888888\",\"line1\":\"L2\",\"city\":\"C2\",\"state\":\"S2\",\"pincode\":\"654321\",\"country\":\"IN\"},\n  \"package\": {\"weight_kg\": 1}\n}"
+        }
+      }
+    },
+    {
+      "name": "Bulk Create Orders",
+      "request": {
+        "method": "POST",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "url": "{{base_url}}/orders/bulk",
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"orders\": [\n    {\"order_id\":\"BULK-1\",\"courier_partner\":\"mockcourier\",\"pickup_address\":{\"name\":\"A\",\"phone\":\"9999999999\",\"line1\":\"L1\",\"city\":\"C\",\"state\":\"S\",\"pincode\":\"123456\",\"country\":\"IN\"},\"drop_address\":{\"name\":\"B\",\"phone\":\"8888888888\",\"line1\":\"L2\",\"city\":\"C2\",\"state\":\"S2\",\"pincode\":\"654321\",\"country\":\"IN\"},\"package\":{\"weight_kg\":1}},\n    {\"order_id\":\"BULK-2\",\"courier_partner\":\"urbanebolt\",\"pickup_address\":{\"name\":\"A\",\"phone\":\"9999999999\",\"line1\":\"L1\",\"city\":\"C\",\"state\":\"S\",\"pincode\":\"123456\",\"country\":\"IN\"},\"drop_address\":{\"name\":\"B\",\"phone\":\"8888888888\",\"line1\":\"L2\",\"city\":\"C2\",\"state\":\"S2\",\"pincode\":\"654321\",\"country\":\"IN\"},\"package\":{\"weight_kg\":1}}\n  ]\n}"
+        }
+      }
+    },
+    {
+      "name": "Get Batch Status",
+      "request": { "method": "GET", "url": "{{base_url}}/orders/bulk/BATCH_ID" }
+    }
+  ]
+}

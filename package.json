@@ -1,0 +1,24 @@
+{
+  "name": "courier-integration-service",
+  "version": "1.0.0",
+  "description": "Courier-agnostic order/shipment API with pluggable courier adapters",
+  "main": "dist/index.js",
+  "scripts": {
+    "dev": "tsx watch src/index.ts",
+    "build": "tsc",
+    "start": "node dist/index.js",
+    "test": "tsx src/tests/run.ts"
+  },
+  "dependencies": {
+    "dotenv": "^16.4.5",
+    "express": "^4.19.2",
+    "nanoid": "^3.3.7",
+    "zod": "^3.23.8"
+  },
+  "devDependencies": {
+    "@types/express": "^4.17.21",
+    "@types/node": "^22.20.3",
+    "tsx": "^4.16.2",
+    "typescript": "^5.5.3"
+  }
+}
